@@ -54,7 +54,7 @@ matplot(y = coef_dat[, c(2:4, 6)] / coef_dat[, 8],
         xlab = "Coefficient column norm",
         main = "Estimation")
 legend("bottomright", legend = c("TPCR", "PCR", "PLS", "XENV"), 
-       lty = all_lty, col = all_col, bty = "n")
+       lty = all_lty, col = all_col, bty = "n", lwd = 2)
 
 matplot(y = coef_dat[, c(10:12, 14)] / coef_dat[, 16],
         x = coef_dat[, 49],
