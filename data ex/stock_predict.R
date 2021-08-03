@@ -151,7 +151,8 @@ tab2 <- round(cbind(b_scale, se_b_scale, p_vals_b_scale, b_ols_scale,
 colnames(tab2) <- c("b", "se", "p", "b_ols", "se_ols", "p_ols", "se_ratio", "u_1")
 xtable(tab2, digits = 3)
 
-tab3 <- round(cbind(gamma_scale * c(-1, rep(1, length(gamma_scale) - 1)), se_gamma_scale, p_vals_gamma_scale), 3)
+tab3 <- round(cbind(gamma_scale * c(-1, rep(1, length(gamma_scale) - 1)),
+se_gamma_scale, p_vals_gamma_scale), 3)
 colnames(tab3) <- c("b", "se", "p")
 rownames(tab3) <- paste0("u", 1:5)
 xtable(tab3, digits = 3)
