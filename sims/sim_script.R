@@ -22,7 +22,7 @@ do_one_sim <- function(set){
   registerDoParallel(cl)
   res_mat <- foreach(ii = 1:set$n_sims, .combine = rbind,
                      .errorhandling = "remove",
-                     .packages = c("pls", "tpcr") %dorng%{
+                     .packages = c("pls", "tpcr")) %dorng%{
     X_train <- matrix(rnorm(set$n * set$p), nrow = set$n, ncol = set$p) %*% chol(SigmaX0)
     Y_train <- X_train %*% beta0 + matrix(rnorm(set$n * set$r), set$n, set$r) %*% chol(Sigma0)
 

@@ -7,7 +7,7 @@ library(sandwich)
 library(xtable)
 set.seed(137)
 
-logret <- read_rds("~/GitHub/tpcr-paper/data ex/logret.Rds")
+logret <- read_rds("~/GitHub/tpcr-suppl/data ex/logret.Rds")
 
 # FUNCTION TO GET RESULTS -----------------------------------------------------
 get_results <- function(resp_symbol = "HD", train_idx = 1:70)

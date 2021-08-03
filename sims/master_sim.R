@@ -1,8 +1,8 @@
 # Directory of sim_script.R
-script_dir <- "~/GitHub/tpcr-paper/sims/"
+script_dir <- "~/GitHub/tpcr-suppl/sims/"
 
 # Directory to save results
-save_dir <- "~/GitHub/tpcr-paper/sims/"
+save_dir <- "~/GitHub/tpcr-suppl/sims/"
 
 
 source(paste0(script_dir, "sim_script.R"))
