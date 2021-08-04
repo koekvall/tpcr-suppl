@@ -27,9 +27,10 @@ do_one_sim <- function(set){
     Y_train <- X_train %*% beta0 + matrix(rnorm(set$n * set$r), set$n, set$r) %*% chol(Sigma0)
 
     # Select k
+    k_consider <- seq(max(1, set$k - 5),  min(set$p - 1, set$k + 5))
     fit_tpcr <- tpcr::tpcr(Y = Y_train,
                               X = X_train,
-                              k = seq(max(1, set$k - 5),  min(set$p - 1, set$k + 5)),
+                              k = k_consider,
                               rho = 0,
                               m = c(2, log(set$n)),
                               covmat = F)
@@ -51,7 +52,7 @@ do_one_sim <- function(set){
     # Get coefficients
     beta_aic <- fit_tpcr[[paste0("fit_k_", k_aic)]]$b
     beta_bic <- fit_tpcr[[paste0("fit_k_", k_bic)]]$b
-    beta_ktrue <- fit_tpcr[[set$k]]$b
+    beta_ktrue <- fit_tpcr[[which(k_consider == set$k)]]$b
     beta_pcr <- fit_pcr$coefficients[ , , k_pcr]
     beta_pcr_ktrue <- fit_pcr$coefficients[ , , set$k]
     beta_pls <- fit_pls$coefficients[ , , k_pls]
