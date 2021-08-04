@@ -22,7 +22,7 @@ do_one_sim <- function(set){
   registerDoParallel(cl)
   res_mat <- foreach(ii = 1:set$n_sims, .combine = rbind,
                      .errorhandling = "remove",
-                     .packages = c("pls", "tpcr")) %dorng%{
+                     .packages = c("pls", "tpcr", "Renvlp")) %dorng%{
     X_train <- matrix(rnorm(set$n * set$p), nrow = set$n, ncol = set$p) %*% chol(SigmaX0)
     Y_train <- X_train %*% beta0 + matrix(rnorm(set$n * set$r), set$n, set$r) %*% chol(Sigma0)
 
@@ -31,9 +31,8 @@ do_one_sim <- function(set){
                               X = X_train,
                               k = seq(max(1, set$k - 5),  min(set$p - 1, set$k + 5)),
                               rho = 0,
-                              m = c(2, log(set$n),
+                              m = c(2, log(set$n)),
                               covmat = F)
-                  )
     k_aic <- fit_tpcr$k_star[1]
     k_bic <- fit_tpcr$k_star[2]
 
@@ -52,20 +51,28 @@ do_one_sim <- function(set){
     # Get coefficients
     beta_aic <- fit_tpcr[[paste0("fit_k_", k_aic)]]$b
     beta_bic <- fit_tpcr[[paste0("fit_k_", k_bic)]]$b
+    beta_ktrue <- fit_tpcr[[set$k]]$b
     beta_pcr <- fit_pcr$coefficients[ , , k_pcr]
+    beta_pcr_ktrue <- fit_pcr$coefficients[ , , set$k]
     beta_pls <- fit_pls$coefficients[ , , k_pls]
+    beta_pls_ktrue <- fit_pls$coefficients[ , , set$k]
     beta_ols <- coef(lm(Y_train ~ 0 + X_train))
     beta_env_aic <- Renvlp::xenv(X = X_train, Y = Y_train, u = k_env_aic)$beta
     beta_env_bic <- Renvlp::xenv(X = X_train, Y = Y_train, u = k_env_bic)$beta
     beta_env_lrt <- Renvlp::xenv(X = X_train, Y = Y_train, u = k_env_lrt)$beta
+    beta_env_ktrue <- Renvlp::xenv(X = X_train, Y = Y_train, u = set$k)$beta
     # Collect normed relative estimation error
     out <- c(norm(beta_aic - beta0, "F"),
              norm(beta_bic - beta0, "F"),
+             norm(beta_ktrue - beta0, "F"),
              norm(beta_pcr - beta0, "F"),
+             norm(beta_pcr_ktrue - beta0, "F"),
              norm(beta_pls - beta0, "F"),
+             norm(beta_pls_ktrue - beta0, "F"),
              norm(beta_env_aic - beta0, "F"),
              norm(beta_env_bic - beta0, "F"),
              norm(beta_env_lrt - beta0, "F"),
+             norm(beta_env_ktrue - beta0, "F"),
              norm(beta_ols - beta0, "F")) / norm(beta0, "F")
 
     # Generate test data
@@ -75,17 +82,29 @@ do_one_sim <- function(set){
     # Collect prediction error
     out <- c(out, norm(X_test %*% beta_aic - Y_test, "F"),
                   norm(X_test %*% beta_bic - Y_test, "F"),
+                  norm(X_test %*% beta_ktrue - Y_test, "F"),
                   norm(X_test %*% beta_pcr - Y_test, "F"),
+                  norm(X_test %*% beta_pcr_ktrue - Y_test, "F"),
                   norm(X_test %*% beta_pls - Y_test, "F"),
+                  norm(X_test %*% beta_pls_ktrue - Y_test, "F"),
                   norm(X_test %*% beta_env_aic - Y_test, "F"),
                   norm(X_test %*% beta_env_bic - Y_test, "F"),
                   norm(X_test %*% beta_env_lrt - Y_test, "F"),
+                  norm(X_test %*% beta_env_ktrue - Y_test, "F"),
                   norm(X_test %*% beta_ols - Y_test, "F"))
 
     # Collect estimated number of components
-    out <- c(out, k_aic, k_bic, k_pcr, k_pls, k_env_aic, k_env_bic, k_env_lrt, set$p)
+    out <- c(out, k_aic, k_bic, k_pcr, k_pls, k_env_aic, k_env_bic, k_env_lrt)
   }
   stopCluster(cl)
   # Output data
+  out_names <- c("aic", "bic", "ktrue", "pcr", "pcr_ktrue", "pls", "pls_ktrue", "env_aic",
+                 "env_bic", "env_lrt", "env_ktrue", "ols")
+  out_names <- c(out_names,
+                 paste0(out_names, "_pred"),
+                 "k_aic", "k_bic", "k_pcr", "k_pls", "k_env_aic", "k_env_bic",
+                 "k_env_lrt")
+  colnames(res_mat) <- out_names
   return(res_mat)
 }
+
