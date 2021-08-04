@@ -50,7 +50,7 @@ matplot(y = coef_dat[, c(2:4, 6)] / coef_dat[, 8],
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Relative RMSE",
+        ylab = "Estimation RMSE",
         xlab = "Coefficient column norm",
         main = "Estimation")
 legend("bottomright", legend = c("TPCR", "PCR", "PLS", "XENV"), 
@@ -62,7 +62,7 @@ matplot(y = coef_dat[, c(10:12, 14)] / coef_dat[, 16],
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Relative RMSE",
+        ylab = "Prediction RMSE",
         xlab = "Coefficient column norm",
         main = "Prediction")
 
@@ -72,7 +72,7 @@ matplot(y = coef_dat[, c(18:20, 22)] - 4,
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Selection bias",
+        ylab = "Selected - true k",
         xlab = "Coefficient column norm",
         main = "Selection of k")
 
@@ -83,7 +83,7 @@ matplot(y = eval_dat[, c(2:4, 6)] / eval_dat[, 8],
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Relative RMSE",
+        ylab = "Estimation RMSE",
         xlab = "Average spiked eigenvalue")
 
 matplot(y = eval_dat[, c(10:12, 14)] / eval_dat[, 16],
@@ -92,7 +92,7 @@ matplot(y = eval_dat[, c(10:12, 14)] / eval_dat[, 16],
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Relative RMSE",
+        ylab = "Prediction RMSE",
         xlab = "Average spiked eigenvalue")
 
 matplot(y = eval_dat[, c(18:20, 22)] - 4,
@@ -101,7 +101,7 @@ matplot(y = eval_dat[, c(18:20, 22)] - 4,
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Selection bias",
+        ylab = "Selected - true k",
         xlab = "Average spiked eigenvalue")
 
 # NO. PREDICTORS --------------------------------------------------------------
@@ -111,7 +111,7 @@ matplot(y = pred_dat[, c(2:4, 6)] / pred_dat[, 8],
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Relative RMSE",
+        ylab = "Estimation RMSE",
         xlab = "Number of predictors")
 
 matplot(y = pred_dat[, c(10:12, 14)] / pred_dat[, 16],
@@ -120,7 +120,7 @@ matplot(y = pred_dat[, c(10:12, 14)] / pred_dat[, 16],
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Relative RMSE",
+        ylab = "Prediction RMSE",
         xlab = "Number of predictors")
 
 matplot(y = pred_dat[, c(18:20, 22)] - 4,
@@ -129,7 +129,7 @@ matplot(y = pred_dat[, c(18:20, 22)] - 4,
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Selection bias",
+        ylab = "Selected - true k",
         xlab = "Number of predictors")
 
 # NO. COMPONENTS --------------------------------------------------------------
@@ -139,7 +139,7 @@ matplot(y = pc_dat[, c(2:4, 6)] / pc_dat[, 8],
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Relative RMSE",
+        ylab = "Estimation RMSE",
         xlab = "Number of components")
 
 matplot(y = pc_dat[, c(10:12, 14)] / pc_dat[, 16],
@@ -148,7 +148,7 @@ matplot(y = pc_dat[, c(10:12, 14)] / pc_dat[, 16],
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Relative RMSE",
+        ylab = "Prediction RMSE",
         xlab = "Number of components")
 
 matplot(y = pc_dat[, c(18:20, 22)] - floor(seq(1, 20, length.out = 5)),
@@ -157,7 +157,7 @@ matplot(y = pc_dat[, c(18:20, 22)] - floor(seq(1, 20, length.out = 5)),
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Selection bias",
+        ylab = "Selected - true k",
         xlab = "Number of components")
 
 # NO. OBSERVATIONS ------------------------------------------------------------
@@ -167,7 +167,7 @@ matplot(y = n_dat[, c(2:4, 6)] / n_dat[, 8],
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Relative RMSE",
+        ylab = "Estimation RMSE",
         xlab = "Number of observations")
 
 matplot(y = n_dat[, c(10:12, 14)] / n_dat[, 16],
@@ -176,7 +176,7 @@ matplot(y = n_dat[, c(10:12, 14)] / n_dat[, 16],
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Relative RMSE",
+        ylab = "Prediction RMSE",
         xlab = "Number of observations")
 
 matplot(y = n_dat[, c(18:20, 22)] - 4,
@@ -185,7 +185,7 @@ matplot(y = n_dat[, c(18:20, 22)] - 4,
         lwd = 2,
         lty = all_lty,
         col = all_col,
-        ylab = "Selection bias",
+        ylab = "Selected - true k",
         xlab = "Number of observations")
 dev.off()
 
