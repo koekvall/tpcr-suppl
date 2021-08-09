@@ -8,9 +8,9 @@ save_dir <- "~/GitHub/tpcr-suppl/sims/new/"
 source(paste0(script_dir, "sim_script.R"))
 
 # Spiked eval
-for(dd in c(1, 3, 5)){
-  set <- list(n = 120, p = 40, k = 4, r = 2, ssy = 1, tau = 1, d = dd,
-              n_sims = 100, seed = idx, n_cores = 11, coef_scale = 0.5)
+for(dd in c(2, 8, 16)){
+  set <- list(n = 120, p = 30, k = 3, r = 2, ssy = 1, tau = 0.5, d = dd,
+              n_sims = 100, seed = 43, n_cores = 11, coef_scale = 1)
   
   res_mat <- do_one_sim(set)
   
@@ -40,9 +40,9 @@ for(pp in c(10, 30, 60)){
 }
 
 # Number of obs
-for(nn in c(50, 100, 200)){
+for(nn in c(50, 100, 1000)){
   set <- list(n = nn, p = 30, k = 4, r = 2, ssy = 1, tau = 1, d = 3,
-              n_sims = 100, seed = idx, n_cores = 11, coef_scale = 0.5)
+              n_sims = 100, seed = 3, n_cores = 11, coef_scale = 0.5)
   
   res_mat <- do_one_sim(set)
   

@@ -3,7 +3,7 @@ library(RColorBrewer)
 cbbPalette <- brewer.pal(n = 5, name = "Dark2")
 
 # Directory of data to plot
-data_dir <- "~/GitHub/tpcr-suppl/sims/"
+data_dir <- "~/GitHub/tpcr-suppl/sims/new/"
 
 coef_dat <- readRDS(paste0(data_dir, "coef_change.Rds"))
 eval_dat <- readRDS(paste0(data_dir, "eval_change.Rds"))
@@ -60,7 +60,7 @@ matplot(y = coef_dat[, c(14, 16, 18, 21)] / coef_dat[, 24],
         xlab = "Coefficient column norm",
         main = "Prediction")
 
-matplot(y = coef_dat[, c(26, 27, 28, 30)] - 4,
+matplot(y = coef_dat[, c(26, 27, 28, 30)] - coef_dat[, "k"],
         x = coef_dat[, 73],
         type = all_type,
         lwd = 2,
@@ -89,7 +89,7 @@ matplot(y = eval_dat[, c(14, 16, 18, 21)] / eval_dat[, 24],
         ylab = "Prediction RMSE",
         xlab = "Average spiked eigenvalue")
 
-matplot(y = eval_dat[, c(26, 27, 28, 30)] - 4,
+matplot(y = eval_dat[, c(26, 27, 28, 30)] - eval_dat[, "k"],
         x = eval_dat[, 69],
         type = all_type,
         lwd = 2,
@@ -117,7 +117,7 @@ matplot(y = pred_dat[, c(14, 16, 18, 21)] / pred_dat[, 24],
         ylab = "Prediction RMSE",
         xlab = "Number of predictors")
 
-matplot(y = pred_dat[, c(26, 27, 28, 30)] - 4,
+matplot(y = pred_dat[, c(26, 27, 28, 30)] - pred_dat[, "k"],
         x = pred_dat[, 64],
         type = all_type,
         lwd = 2,
@@ -145,7 +145,7 @@ matplot(y = pc_dat[, c(14, 16, 18, 21)] / pc_dat[, 24],
         ylab = "Prediction RMSE",
         xlab = "Number of components")
 
-matplot(y = pc_dat[, c(26, 27, 28, 30)] - pc_dat[, 65],
+matplot(y = pc_dat[, c(26, 27, 28, 30)] - pc_dat[, "k"],
         x = pc_dat[, 65],
         type = all_type,
         lwd = 2,
@@ -173,7 +173,7 @@ matplot(y = n_dat[, c(14, 16, 18, 21)] / n_dat[, 24],
         ylab = "Prediction RMSE",
         xlab = "Number of observations")
 
-matplot(y = n_dat[, c(26, 27, 28, 30)] - 4,
+matplot(y = n_dat[, c(26, 27, 28, 30)] - n_dat[, "k"],
         x = n_dat[, 63],
         type = all_type,
         lwd = 2,

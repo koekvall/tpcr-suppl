@@ -3,9 +3,9 @@ do_one_sim <- function(set){
   library(doParallel)
   library(doRNG)
   library(pls)
-
+  
   Sigma0 <- diag(set$ssy, set$r)
-
+  
   U0 <- rstiefel::rustiefel(set$p, set$k)
   D0 <- diag(seq(0.9 * set$d, set$d * 1.1, length.out = set$k), set$k)
   SigmaX0 <- set$tau * (diag(1, set$p) + U0 %*% D0 %*% t(U0))
@@ -38,11 +38,13 @@ do_one_sim <- function(set){
     k_bic <- fit_tpcr$k_star[2]
 
     fit_pcr <- pls::pcr(Y_train ~ 0 + X_train, ncomp = set$p - 1, validation = "LOO")
-    k_pcr <- which.min(colMeans(pls::RMSEP(fit_pcr)$val[1, 1:2, ])) - 1
+    # Smallest average RMSEP over the r responses
+    k_pcr <- which.min(colMeans(pls::RMSEP(fit_pcr)$val[1, 1:set$r, ])) - 1
 
     fit_pls <- pls::plsr(Y_train ~ 0 + X_train, ncomp = set$p - 1,
       method = "simpls", validation = "LOO")
-    k_pls <- which.min(colMeans(pls::RMSEP(fit_pls)$val[1, 1:2, ])) - 1
+    # Smallest average RMSEP over the r responses
+    k_pls <- which.min(colMeans(pls::RMSEP(fit_pls)$val[1, 1:set$r, ])) - 1 
 
     env_k <- Renvlp::u.xenv(X_train, Y_train)
     k_env_aic <- env_k$u.aic
