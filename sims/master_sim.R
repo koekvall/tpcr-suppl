@@ -2,7 +2,7 @@
 script_dir <- "~/GitHub/tpcr-suppl/sims/"
 
 # Directory to save results
-save_dir <- "~/GitHub/tpcr-suppl/sims/new/"
+save_dir <- "~/GitHub/tpcr-suppl/sims/"
 
 # Script with function to do one simulation
 source(paste0(script_dir, "sim_script.R"))

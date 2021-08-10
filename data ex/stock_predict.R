@@ -152,7 +152,7 @@ colnames(tab2) <- c("b", "se", "p", "b_ols", "se_ols", "p_ols", "se_ratio", "u_1
 xtable(tab2, digits = 3)
 
 tab3 <- round(cbind(gamma_scale * c(-1, rep(1, length(gamma_scale) - 1)),
-se_gamma_scale, p_vals_gamma_scale), 3)
-colnames(tab3) <- c("b", "se", "p")
+se_gamma_scale, p_vals_gamma_scale, (eig_X$values[1:5] - eig_X$values[6]) / eig_X$values[6]), 3)
+colnames(tab3) <- c("b", "se", "p", "lam")
 rownames(tab3) <- paste0("u", 1:5)
 xtable(tab3, digits = 3)
